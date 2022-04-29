@@ -2,7 +2,7 @@
 import './App.css';
 import styled from "@emotion/styled";
 import StyledTreeExample from "./StyledTreeExample";
-import BasicTreeExample from "./BasicTreeExample";
+// import BasicTreeExample from "./BasicTreeExample";
 
 const Title = styled.h2`
   margin-top: 5rem;
@@ -14,9 +14,7 @@ const Title = styled.h2`
 function App() {
   return (
     <div style={{ textAlign: "center" }}>
-      <Title>Basic tree</Title>
-      <BasicTreeExample />
-      <Title>Styled tree</Title>
+      <Title>Redux Tree Project</Title>
       <StyledTreeExample />
     </div>
   );

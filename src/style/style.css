@@ -1,0 +1,33 @@
+body {
+    background-color: rgb(167, 167, 167);
+}
+
+.card {
+    padding-top: 15px;
+    padding-right: 15px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+}
+
+img {
+    width: 50px;
+    float: left;
+    display: inline;
+}
+
+label {
+    padding: 10 10 10 10px;
+    white-space:pre;
+}
+
+input {
+    width: 70%;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    background-color:rgba(0, 0, 0, 0);
+    border-bottom: 0.5px solid black;
+}
