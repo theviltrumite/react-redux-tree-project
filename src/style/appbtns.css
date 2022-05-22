@@ -1,0 +1,44 @@
+.appbtn {
+    position: relative;
+    background-color: #3886ec;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    color: #FFFFFF;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.appbtn:after {
+    content: "";
+    background: #f1f1f1;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+.appbtn:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+
+.save {
+    background-color: #ff7907;
+}
+
+.smdiv{
+    padding-left: 10px;
+    text-align: left;
+}

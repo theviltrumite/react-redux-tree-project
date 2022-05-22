@@ -20,14 +20,14 @@ img {
 
 label {
     padding: 10 10 10 10px;
-    white-space:pre;
+    white-space: pre;
 }
 
 input {
-    width: 70%;
+    width: 100%;
     border-left: none;
     border-right: none;
     border-top: none;
-    background-color:rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
     border-bottom: 0.5px solid black;
 }
