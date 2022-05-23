@@ -21,45 +21,64 @@ const TreeNodes = (prop) => {
 
     for (let k = 0; k <= state_nodes.length; k++) {
         if (state_nodes[k] !== undefined) {
-            let thisNode = state_nodes[k].node_id;
-            let childsOfThisNode = [];
+            let thisNode = state_nodes[k];
+            let childsOfThisNodeIDinThisTree = [];
             for (let n = 0; n < state_nodes.length; n++) {
-                if (thisNode === state_nodes[n].parent_id) {
-                    childsOfThisNode.push(state_nodes[n].node_id);
+                if (thisNode["node_id"] === state_nodes[n].parent_id && thisNode["tree_id"] === state_nodes[n]["tree_id"]) {
+                    childsOfThisNodeIDinThisTree.push(state_nodes[n].node_id);
                 }
             }
-            parentChildList.push({ thisNode: childsOfThisNode });
+            parentChildList.push({ thisNode: childsOfThisNodeIDinThisTree });
         }
     }
 
-    function isYourNode(dual) {
-        return dual.thisNode === 
-    }
+    // function isYourNode(dual) {
+    //     return dual.thisNode === 
+    // }
 
     let numberOfNodesThatHasRootAsParent = 0;
-    function outputChilds(tree_id, node_id) {
+    let rootTreesOfThisTree = [];
+
+    function outputChilds(tree_id) {
         let arrayOfKeysOfObjects;
         for (let obje in liste) {
-            let index = parentChildList.find(element, );
+            // let index = parentChildList.find(element,);
             parentChildList.forEach(element => {
-                
+
+                if (element.childsOfThisNodeIDinThisTree !== []) {
+
+                    for (let t = 0; t <= childsOfThisNodeIDinThisTree.length; t++) {
+                        return (
+                            <TreeNode label={<StyledNode tree_id={prop} node_id={childsOfThisNodeIDinThisTree[c]} />}>
+                                {outputChilds()}
+                            </TreeNode>
+                        )
+                    }
+
+
+                } else if (element.childsOfThisNodeIDinThisTree === []) {
+                    return (
+                        <TreeNode label={<StyledNode tree_id={tree_id} node_id={childsOfThisNodeIDinThisTree[c]} />}></TreeNode>
+                    );
+                }
+
             });
-        //     if (Object.hasOwnProperty.call(object, object)) {
-        //         const element = object[object];
-                
+            //     if (Object.hasOwnProperty.call(object, object)) {
+            //         const element = object[object];
+
+            //     }
+        }
+        // if (parentChildList[]) { //eğer daha fazla childı kalmadıysa yap burayı
+        //     for (let i = 0; i < thisLayersNodeNumber; i++) {
+        //         return (<TreeNode label={<StyledNode tree_id={prop} node_id={childsOfThisNode[c]}></StyledNode>}>
+
+        //         </TreeNode>)
         //     }
-        }
-        if (parentChildList[]) { //eğer daha fazla childı kalmadıysa yap burayı
-            for(let i = 0; i < thisLayersNodeNumber; i++) {
-                return (<TreeNode label={<StyledNode tree_id={prop} node_id={childsOfThisNode[c]}></StyledNode>}>
-                    
-                </TreeNode>)
-            }
-        }
-        outputChilds();
+        // }
+        // outputChilds();
     }
 
-<TreeNode label={<StyledNode tree_id={prop} node_id={thisNode}></StyledNode>}>
+    {/* <TreeNode label={<StyledNode tree_id={prop} node_id={thisNode}></StyledNode>}>
 <TreeNode label={<StyledNode tree_id={prop} node_id={childsOfThisNode[c]}></StyledNode>}>
 outputChilds();
 </TreeNode>
@@ -67,12 +86,13 @@ outputChilds();
 
 <TreeNode label={<StyledNode tree_id={prop} node_id={childsOfThisNode[c]}></StyledNode>}>
 
-</TreeNode>
+</TreeNode> */}
 
     return (
-        <TreeNode label={<StyledNode tree_id={state_trees[i].tree_id} node_id={state_nodes[j].parent_id}></StyledNode>}>
+        // <TreeNode label={<StyledNode tree_id={state_trees[i].tree_id} node_id={state_nodes[j].parent_id}></StyledNode>}>
 
-        </TreeNode>
+        // </TreeNode>
+        outputChilds(prop.tree_id)
     );
 }
 

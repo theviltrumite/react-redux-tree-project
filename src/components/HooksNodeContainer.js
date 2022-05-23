@@ -11,7 +11,7 @@ import StyledNode from '../StyledNode';
 
 import store from '../redux/store';
 import { useSelector } from 'react-redux'
-// import TreeNodes from './TreeNodes';
+import TreeNodes from './TreeNodes';
 
 function HooksNodeContainer() {
     // const node_id = useSelector(state => state.node.node_id)
@@ -51,7 +51,7 @@ function HooksNodeContainer() {
         // for (let k = 0; k <= state_nodes.length; k++) {
         //     if(state_nodes[k] !== undefined) {
         //         if() {
-                    
+
         //         }
         //     }
         // }
@@ -79,19 +79,19 @@ function HooksNodeContainer() {
                     lineBorderRadius={"10px"}
                     label={<StyledNode tree_id={state_trees[i].tree_id} node_id={1} />}>
 
-                    {/* <TreeNodes></TreeNodes> */}
+                    <TreeNodes tree_id={state_trees[i].tree_id}></TreeNodes>
 
                     {/* <TreeNode label={<StyledNode tree_id={state_trees[i].tree_id} node_id={1}></StyledNode>} /> */}
 
                     {/* <TreeNode label={<StyledNode></StyledNode>}></TreeNode> */}
-                    {<TreeNode label={<StyledNode></StyledNode>}>
+                    {/* {<TreeNode label={<StyledNode></StyledNode>}>
                         <TreeNode label={<StyledNode></StyledNode>}></TreeNode>
                         <TreeNode label={<StyledNode></StyledNode>}></TreeNode>
                     </TreeNode>}
                     {<TreeNode label={<StyledNode></StyledNode>}>
                         <TreeNode label={<StyledNode></StyledNode>}></TreeNode>
                         <TreeNode label={<StyledNode></StyledNode>}></TreeNode>
-                    </TreeNode>}
+                    </TreeNode>} */}
                     {/* {<TreeNode label={<StyledNode></StyledNode>}>
                         <TreeNode label={<StyledNode></StyledNode>}></TreeNode>
                         <TreeNode label={<StyledNode></StyledNode>}></TreeNode>
@@ -145,8 +145,6 @@ function HooksNodeContainer() {
 
 
         </div>
-
-
 
     )
 }
