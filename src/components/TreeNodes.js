@@ -39,18 +39,18 @@ const TreeNodes = (prop) => {
     let numberOfNodesThatHasRootAsParent = 0;
     let rootTreesOfThisTree = [];
 
-    function outputChilds(tree_id) {
+    function outputChilds(tree_id, node_id) {
         let arrayOfKeysOfObjects;
-        for (let obje in liste) {
+        // for (let obje in liste) {
             // let index = parentChildList.find(element,);
             parentChildList.forEach(element => {
 
                 if (element.childsOfThisNodeIDinThisTree !== []) {
 
-                    for (let t = 0; t <= childsOfThisNodeIDinThisTree.length; t++) {
+                    for (let t = 0; t <= element.childsOfThisNodeIDinThisTree.length; t++) {
                         return (
-                            <TreeNode label={<StyledNode tree_id={prop} node_id={childsOfThisNodeIDinThisTree[c]} />}>
-                                {outputChilds()}
+                            <TreeNode label={<StyledNode tree_id={prop.tree_id} node_id={element.childsOfThisNodeIDinThisTree[t]} />}>
+                                {outputChilds(prop.tree_id, )}
                             </TreeNode>
                         )
                     }
@@ -58,7 +58,7 @@ const TreeNodes = (prop) => {
 
                 } else if (element.childsOfThisNodeIDinThisTree === []) {
                     return (
-                        <TreeNode label={<StyledNode tree_id={tree_id} node_id={childsOfThisNodeIDinThisTree[c]} />}></TreeNode>
+                        <TreeNode label={<StyledNode tree_id={tree_id} node_id={node_id} />}></TreeNode>
                     );
                 }
 
@@ -67,7 +67,11 @@ const TreeNodes = (prop) => {
             //         const element = object[object];
 
             //     }
-        }
+
+
+        // }
+
+
         // if (parentChildList[]) { //eğer daha fazla childı kalmadıysa yap burayı
         //     for (let i = 0; i < thisLayersNodeNumber; i++) {
         //         return (<TreeNode label={<StyledNode tree_id={prop} node_id={childsOfThisNode[c]}></StyledNode>}>
@@ -83,9 +87,7 @@ const TreeNodes = (prop) => {
 outputChilds();
 </TreeNode>
 </TreeNode>
-
 <TreeNode label={<StyledNode tree_id={prop} node_id={childsOfThisNode[c]}></StyledNode>}>
-
 </TreeNode> */}
 
     return (

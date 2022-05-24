@@ -11,7 +11,7 @@ import StyledNode from '../StyledNode';
 
 import store from '../redux/store';
 import { useSelector } from 'react-redux'
-import TreeNodes from './TreeNodes';
+import Node from './Node';
 
 function HooksNodeContainer() {
     // const node_id = useSelector(state => state.node.node_id)
@@ -22,12 +22,12 @@ function HooksNodeContainer() {
     //     storeState = store.getState();
     // });
 
-    const state_nodes = useSelector(state => state.nodes);
+    // const state_nodes = useSelector(state => state.nodes);
     const state_trees = useSelector(state => state.trees);
 
     let trees = [];
-    let nodes = [];
-    let parents = [];
+    // let nodes = [];
+    // let parents = [];
 
 
     // for (let j = 0; j < nodes.length; j++) {
@@ -40,13 +40,13 @@ function HooksNodeContainer() {
     // }
 
     for (let i = 0; i < state_trees.length; i++) {
-        let nodesOfYourTree = [];
-        for (let j = 0; j < state_nodes.length; j++) {
-            const element = state_nodes[j].node_id;
-            if (state_nodes[j].node_id !== 1) {
-                nodesOfYourTree.push(element);
-            }
-        }
+        // let nodesOfYourTree = [];
+        // for (let j = 0; j < state_nodes.length; j++) {
+        //     const element = state_nodes[j].node_id;
+        //     if (state_nodes[j].node_id !== 1) {
+        //         nodesOfYourTree.push(element);
+        //     }
+        // }
 
         // for (let k = 0; k <= state_nodes.length; k++) {
         //     if(state_nodes[k] !== undefined) {
@@ -56,19 +56,18 @@ function HooksNodeContainer() {
         //     }
         // }
 
-        let parentsOfYourTree = [];
-        for (let j = 0; j < state_nodes.length; j++) {
-            const element = state_nodes[j].parent_id;
-            if (state_nodes[j].parent_id !== 1) {
-                parentsOfYourTree.push(
-                    <TreeNode label={<StyledNode tree_id={state_trees[i].tree_id} node_id={state_nodes[j].parent_id}></StyledNode>}>
-                        {/* if () {
-
-                        } */}
-                    </TreeNode>
-                );
-            }
-        }
+        // let parentsOfYourTree = [];
+        // for (let j = 0; j < state_nodes.length; j++) {
+        //     const element = state_nodes[j].parent_id;
+        //     if (state_nodes[j].parent_id !== 1) {
+        //         parentsOfYourTree.push(
+        //             <TreeNode label={<StyledNode tree_id={state_trees[i].tree_id} node_id={state_nodes[j].parent_id}></StyledNode>}>
+        //                 {/* if () {
+        //                 } */}
+        //             </TreeNode>
+        //         );
+        //     }
+        // }
 
         trees.push(
             <div key={i} style={{ position: "relative", margin: "70px 30px 20px 50px", display: "inline-block" }}>
@@ -78,8 +77,8 @@ function HooksNodeContainer() {
                     lineColor={"black"}
                     lineBorderRadius={"10px"}
                     label={<StyledNode tree_id={state_trees[i].tree_id} node_id={1} />}>
-
-                    <TreeNodes tree_id={state_trees[i].tree_id}></TreeNodes>
+                    <Node tree_id={state_trees[i].tree_id} parent_id={1} />
+                    {/* <TreeNodes tree_id={state_trees[i]["tree_id"]}></TreeNodes> */}
 
                     {/* <TreeNode label={<StyledNode tree_id={state_trees[i].tree_id} node_id={1}></StyledNode>} /> */}
 
