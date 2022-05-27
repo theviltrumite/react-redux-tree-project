@@ -112,7 +112,11 @@ const StyledNode = (props) => {
                     label: 'Delete',
                     key: '2',
                     // node_id: node_id
-                }
+                },
+                {
+                    label: "Request Income",
+                    key: "3"
+            }
             ]}
         />
     );
