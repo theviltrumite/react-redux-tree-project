@@ -15,7 +15,7 @@ function Node(props) {
         return (
             nodes.map((node) => {
                 return (
-                    <TreeNode label={<StyledNode tree_id={node.tree_id} node_id={node.node_id} />}>
+                    <TreeNode key={`${node.node_id} ${node.tree_id}`} label={<StyledNode tree_id={node.tree_id} node_id={node.node_id} />}>
                         {
                             <Node key={'' + node.tree_id + node.node_id} tree_id={node.tree_id} parent_id={node.node_id} node_id={node.node_id} />
                         }

@@ -31,3 +31,26 @@ input {
     background-color: rgba(0, 0, 0, 0);
     border-bottom: 0.5px solid black;
 }
+
+.regProcess {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkIcon {
+    border-radius: 50%;
+    width: fit-content;
+    background-color: greenyellow;
+    display: none;
+}
+
+.warning {
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 12.124px solid rgb(255, 204, 62);
+    border-top: 0;
+    /* border-top: 12.124px solid rgb(255, 204, 62); */
+}
