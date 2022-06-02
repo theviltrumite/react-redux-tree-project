@@ -1,3 +1,4 @@
 export const ADD_NODE = 'ADD_NODE'
 export const DELETE_NODE = 'DELETE_NODE'
 export const CHANGE_INCOME_INFO = 'CHANGE_INCOME_INFO'
+export const CHANGE_REG_INFO = 'CHANGE_REG_INFO'

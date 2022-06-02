@@ -1,4 +1,4 @@
-import { ADD_NODE, CHANGE_INCOME_INFO, DELETE_NODE } from './actionTypes'
+import { ADD_NODE, CHANGE_INCOME_INFO, CHANGE_REG_INFO, DELETE_NODE } from './actionTypes'
 
 // export const addNode = (parent_id = 1, node_id = 1, username = "You") => {
 export const addNode = (tree_id = 1, parent_id = 1, node_id = 1) => {
@@ -24,14 +24,25 @@ export const deleteNode = (tree_id = 1, node_id = 1) => {
     }
 }
 
-export const changeIncomeInfo = (tree_id, node_id, name, self_income) => {
+export const changeIncomeInfo = (tree_id, node_id, username, self_income, sumOfYourChildsTotals = 0) => {
     return {
         type: CHANGE_INCOME_INFO,
         payload: {
             tree_id,
             node_id,
-            name,
-            self_income
+            username,
+            self_income: Number(self_income),
+            sumOfYourChildsTotals: Number(sumOfYourChildsTotals)
+        }
+    }
+}
+
+export const changeRegInfo = (tree_id, node_id) => {
+    return {
+        type: CHANGE_REG_INFO,
+        payload: {
+            tree_id,
+            node_id,
         }
     }
 }

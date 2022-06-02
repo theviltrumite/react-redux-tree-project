@@ -1,4 +1,4 @@
-import { ADD_NODE, CHANGE_INCOME_INFO, DELETE_NODE } from './actionTypes'
+import { ADD_NODE, CHANGE_INCOME_INFO, CHANGE_REG_INFO, DELETE_NODE } from './actionTypes'
 
 let lastId = 1;
 
@@ -7,25 +7,26 @@ const initialState = [
         tree_id: 1,
         parent_id: 1,
         node_id: 1,
-        name: "",
+        username: "",
         self_income: 0,
-        total_income: 0
+        total_income: 0,
+        registered: true
     }
 ]
 
 const nodeReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_NODE:
-
             return [
                 ...state,
                 {
                     tree_id: action.payload.tree_id,
                     parent_id: action.payload.parent_id,
                     node_id: action.payload.node_id,
-                    name: "",
+                    username: "",
                     self_income: 0,
-                    total_income: 0
+                    total_income: 0,
+                    registered: true
                 }
             ]
         case DELETE_NODE:
@@ -38,7 +39,10 @@ const nodeReducer = (state = initialState, action) => {
                 );
             }
         case CHANGE_INCOME_INFO:
-            return (state.map((node => (node.node_id === action.payload.parent_id && node.tree_id === action.payload.tree_id) ? { ...state, total_income: total_income + action.payload.self_income } : node)));
+            return state.map(node => (node.tree_id === action.payload.tree_id && node.node_id === action.payload.node_id) ?
+                { ...node, username: action.payload.username, self_income: action.payload.self_income, total_income: action.payload.self_income + action.payload.sumOfYourChildsTotals, registered: true } : node);
+        case CHANGE_REG_INFO:
+            return state.map(node => (node.tree_id === action.payload.tree_id && node.node_id === action.payload.node_id) ? { ...node, registered: false } : node);
         default: return state
     }
 }
