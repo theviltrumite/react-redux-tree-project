@@ -10,7 +10,7 @@ import "./style/style.css";
 // import { Tree, TreeNode } from "react-organizational-chart";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { addNode, deleteNode, deleteTree, changeIncomeInfo, changeRegInfo } from './redux'
 // import { type } from '@testing-library/user-event/dist/type';
 
@@ -38,6 +38,7 @@ const StyledNode = (props) => {
     let state_nodes = useSelector(state => state.nodes);
     let your_node = state_nodes.find(element => element.tree_id === props.tree_id && element.node_id === props.node_id)
     let your_total_income = your_node.total_income;
+    // let your_registration = your_node.registered;
 
     const [username, setUsername] = useState("");
     const [self_income, setSelf_Income] = useState(0);
@@ -49,12 +50,107 @@ const StyledNode = (props) => {
 
     const dispatch = useDispatch();
 
-    const [isRegistered, setIsRegistered] = useState(true);
-    if (your_node.isRegistered === false) {
-        setIsRegistered(current => current = false);
-    }
+    // const [isRegistered, setIsRegistered] = useState(true);
+    // if (your_node.isRegistered === false) {
+    //     setIsRegistered(current => current = false);
+    // }
 
     let child_node = ChildInfoGiver(props.tree_id);
+
+    let areAllChildsRegistered = true;
+
+    let sumOfYourChildsTotals = 0;
+    let yourChildsAreRegistered = true;
+    let youSummedThemAll = true;
+    // for (let i = 0; i < state_nodes.length; i++) {
+    //     // console.log(state_nodes[i].total_income);
+    //     if (state_nodes.length >= 2) {
+    //         if (state_nodes[i].tree_id === props.tree_id && state_nodes[i].parent_id === props.node_id && state_nodes[i].node_id !== props.node_id && state_nodes[i].registered === true && state_nodes[i].total_income !== null) {
+    //             // console.log("xcvxcvxvc");
+    //             console.log("asdasd " + state_nodes[i].total_income);
+    //             sumOfYourChildsTotals += state_nodes[i].total_income;
+    //         }
+    //     }
+    // }
+    // console.log(self_income + "   and " + sumOfYourChildsTotals);
+    // dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, self_income, sumOfYourChildsTotals));
+
+    for (let n = 0; n < state_nodes.length; n++) {
+        if (state_nodes[n].tree_id === props.tree_id && state_nodes[n].parent_id === props.node_id && state_nodes[n].node_id !== props.node_id && your_node.registered === true && state_nodes.length > 1) {
+            areAllChildsRegistered = areAllChildsRegistered && state_nodes[n].registered;
+            if (areAllChildsRegistered === false) {
+                dispatch(changeRegInfo(props.tree_id, props.node_id));
+                youSummedThemAll = false;
+            } else if (areAllChildsRegistered === true) {
+                youSummedThemAll = true;
+            }
+            else {
+                alert("Hata");
+            }
+        }
+    }
+
+
+    if (youSummedThemAll === false) {
+        try {
+            for (let i = 0; i < state_nodes.length; i++) {
+                // console.log(state_nodes[i].total_income);
+                if (state_nodes.length >= 2 && areAllChildsRegistered) {
+                    if (state_nodes[i].tree_id === props.tree_id && state_nodes[i].parent_id === props.node_id && state_nodes[i].node_id !== props.node_id && state_nodes[i].registered === true && state_nodes[i].total_income !== null) {
+                        // console.log("xcvxcvxvc");
+                        console.log("asdasd " + state_nodes[i].total_income);
+                        sumOfYourChildsTotals += state_nodes[i].total_income;
+                    }
+                }
+            }
+            youSummedThemAll = true;
+            console.log(self_income + "   and " + sumOfYourChildsTotals);
+            if (youSummedThemAll) {
+                dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, self_income, sumOfYourChildsTotals));
+            }
+        } catch (error) {
+            // alert(error.message);
+        }
+    }
+
+
+    const detectNameChange = (e) => {
+        dispatch(changeRegInfo(props.tree_id, props.node_id));
+        setUsername(e.target.value);
+        // console.log(event.target.value);
+        for (let i = 0; i < state_nodes.length; i++) {
+            // console.log(state_nodes[i].total_income);
+            if (state_nodes.length >= 2) {
+                if (state_nodes[i].tree_id === props.tree_id && state_nodes[i].parent_id === props.node_id && state_nodes[i].node_id !== props.node_id && state_nodes[i].registered === true && state_nodes[i].total_income !== null) {
+                    // console.log("xcvxcvxvc");
+                    console.log("asdasd " + state_nodes[i].total_income);
+                    sumOfYourChildsTotals += state_nodes[i].total_income;
+                }
+            }
+        }
+        youSummedThemAll = true;
+        console.log(self_income + "   and " + sumOfYourChildsTotals);
+        dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, self_income, sumOfYourChildsTotals));
+    }
+
+    const detectIncomeChange = (e) => {
+        dispatch(changeRegInfo(props.tree_id, props.node_id));
+        setSelf_Income(e.target.value);
+        for (let i = 0; i < state_nodes.length; i++) {
+            // console.log(state_nodes[i].total_income);
+            if (state_nodes.length >= 2) {
+                if (state_nodes[i].tree_id === props.tree_id && state_nodes[i].parent_id === props.node_id && state_nodes[i].node_id !== props.node_id && state_nodes[i].registered === true && state_nodes[i].total_income !== null) {
+                    // console.log("xcvxcvxvc");
+                    console.log("asdasd " + state_nodes[i].total_income);
+                    sumOfYourChildsTotals += state_nodes[i].total_income;
+                }
+            }
+        }
+        youSummedThemAll = true;
+        console.log(self_income + "   and " + sumOfYourChildsTotals);
+        dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, self_income, sumOfYourChildsTotals));
+    }
+
 
     function handleMenuClick(e) {
         switch (e.key) {
@@ -69,92 +165,8 @@ const StyledNode = (props) => {
                     dispatch(deleteTree(props.tree_id));
                 }
                 break;
-            case '3':
-                for (let n = 0; n < state_nodes.length; n++) {
-                    if (state_nodes[n].tree_id === props.tree_id && state_nodes[n].parent_id === props.node_id && state_nodes[n].registered === false) {
-                        setIsRegistered(current => current = false);
-                    }
-                }
-                if (!isRegistered) {
-                    let nodes = store.getState().nodes;
-                    let areAllChildsRegistered = true;
-                    let sumOfYourChildsTotals = 0;
-                    for (let n = 0; n < nodes.length; n++) {
-                        if (nodes[n].tree_id === props.tree_id && nodes[n].parent_id === props.node_id && nodes[n].node_id !== props.node_id) {
-                            areAllChildsRegistered = areAllChildsRegistered && nodes[n].registered;
-                        }
-                    }
-                    if (areAllChildsRegistered === true) {
-                        try {
-                            // useEffect(() => {
-                            //     self_income_input.current = self_income;
-                            // },[self_income]);
-
-                            // console.log(nodes)
-                            for (let i = 0; i < nodes.length; i++) {
-                                // console.log(nodes[i].total_income);
-                                if (nodes.length >= 2) {
-                                    if (nodes[i].tree_id === props.tree_id && nodes[i].parent_id === props.node_id && nodes[i].node_id !== props.node_id && nodes[i].registered === true && nodes[i].total_income !== null) {
-                                        // console.log("xcvxcvxvc");
-                                        console.log("asdasd " + nodes[i].total_income);
-                                        sumOfYourChildsTotals += nodes[i].total_income;
-                                    }
-                                }
-                            }
-                            setIsRegistered(current => current = true);
-                            console.log(self_income + "   and " + sumOfYourChildsTotals);
-                            dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, self_income, sumOfYourChildsTotals));
-                        } catch (error) {
-                            alert(error.message);
-                        }
-                    } else {
-                        message.info("This node's childs are not registered registered. Register them first.");
-                    }
-                } else {
-                    message.info("This node is already registered.");
-                }
-                break;
             default:
                 break;
-        }
-        // message.info('Click on ' + e.key + ' item.');
-        // console.log('click', e);
-    }
-
-    // const register = (e) => {
-    //     try {
-    //         setIsRegistered(current => current = true);
-    //         setUsername(e.target.value);
-    //         dispatch(changeIncomeInfo(props.tree_id, props.node_id, "asd", 10));
-    //     } catch (error) {
-    //         alert(error.message);
-    //     }
-    // }
-
-    const detectNameChange = (e) => {
-        setIsRegistered(current => current = false);
-        setUsername(e.target.value);
-        if (your_node.registered) {
-            dispatch(changeRegInfo(props.tree_id, props.node_id));
-            for (let k = 0; k < state_nodes.length; k++) {
-                if (state_nodes[k].tree_id === props.tree_id && state_nodes[k].parent_id === props.node_id && state_nodes[k].node_id !== props.node_id && state_nodes[k].registered === true) {
-                    dispatch(changeRegInfo(props.tree_id, state_nodes[k].node_id));
-                }
-            }
-        }
-        // console.log(event.target.value);
-    }
-
-    const detectIncomeChange = (e) => {
-        setIsRegistered(current => current = false);
-        setSelf_Income(e.target.value);
-        if (your_node.registered === true) {
-            dispatch(changeRegInfo(props.tree_id, props.node_id));
-            for (let k = 0; k < state_nodes.length; k++) {
-                if (state_nodes[k].tree_id === props.tree_id && state_nodes[k].parent_id === props.node_id && state_nodes[k].node_id !== props.node_id && state_nodes[k].registered === true) {
-                    dispatch(changeRegInfo(props.tree_id, state_nodes[k].node_id));
-                }
-            }
         }
     }
 
@@ -215,14 +227,14 @@ const StyledNode = (props) => {
                     <Col span={17}>
                         <Input type="number" placeholder="Family money" value={your_total_income} />
                     </Col>
-                    <Col span={3} className="regProcess">
+                    {/* <Col span={3} className="regProcess">
                         <Tooltip placement="top" title="Your informations are not registered">
                             <WarningOutlined style={{ display: isRegistered ? 'none' : 'block' }} className='warning' />
                         </Tooltip>
                         <Tooltip placement="top" title="Your informations are succesfully registered">
                             <CheckCircleOutlined style={{ display: isRegistered ? 'block' : 'none' }} className="checkIcon" />
                         </Tooltip>
-                    </Col>
+                    </Col> */}
                 </Row>
             </div>
         </StyledNodeDiv>
