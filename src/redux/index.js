@@ -1,4 +1,4 @@
-export { changeIncomeInfo, addNode, deleteNode, changeRegInfo } from './node/nodeActions'
+export { changeIncomeInfo, addNode, deleteNode, unRegNode, regNode } from './node/nodeActions'
 export { addTree, deleteTree } from './trees/treeActions'
 // export { addIncome, deleteIncome } from './income/incomeActions'
 // export { addTree,deleteTree } from './tree/treeActions'

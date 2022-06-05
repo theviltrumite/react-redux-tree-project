@@ -11,7 +11,7 @@ import "./style/style.css";
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { addNode, deleteNode, deleteTree, changeIncomeInfo, changeRegInfo } from './redux'
+import { addNode, deleteNode, deleteTree, changeIncomeInfo, unRegNode, regNode } from './redux'
 // import { type } from '@testing-library/user-event/dist/type';
 
 import ChildInfoGiver from './components/ChildInfoGiver';
@@ -44,8 +44,8 @@ const StyledNode = (props) => {
     const [self_income, setSelf_Income] = useState(0);
     // const [total_income, setTotal_Income] = useState(0);
 
-    // const username_input = useRef("");
-    const self_income_input = useRef(0);
+    const prev_username = useRef("");
+    // const prev_self_income = useRef(0);
     // const total_income_input = useRef(0);
 
     const dispatch = useDispatch();
@@ -60,8 +60,11 @@ const StyledNode = (props) => {
     let areAllChildsRegistered = true;
 
     let sumOfYourChildsTotals = 0;
-    let yourChildsAreRegistered = true;
     let youSummedThemAll = true;
+
+    let unReggedItAlready = false;
+    let alreadyReggedChild = true;
+
     // for (let i = 0; i < state_nodes.length; i++) {
     //     // console.log(state_nodes[i].total_income);
     //     if (state_nodes.length >= 2) {
@@ -75,53 +78,73 @@ const StyledNode = (props) => {
     // console.log(self_income + "   and " + sumOfYourChildsTotals);
     // dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, self_income, sumOfYourChildsTotals));
 
-    for (let n = 0; n < state_nodes.length; n++) {
-        if (state_nodes[n].tree_id === props.tree_id && state_nodes[n].parent_id === props.node_id && state_nodes[n].node_id !== props.node_id && your_node.registered === true && state_nodes.length > 1) {
-            areAllChildsRegistered = areAllChildsRegistered && state_nodes[n].registered;
-            if (areAllChildsRegistered === false) {
-                dispatch(changeRegInfo(props.tree_id, props.node_id));
-                youSummedThemAll = false;
-            } else if (areAllChildsRegistered === true) {
-                youSummedThemAll = true;
-            }
-            else {
-                alert("Hata");
-            }
-        }
-    }
 
 
-    if (youSummedThemAll === false) {
-        try {
-            for (let i = 0; i < state_nodes.length; i++) {
-                // console.log(state_nodes[i].total_income);
-                if (state_nodes.length >= 2 && areAllChildsRegistered) {
-                    if (state_nodes[i].tree_id === props.tree_id && state_nodes[i].parent_id === props.node_id && state_nodes[i].node_id !== props.node_id && state_nodes[i].registered === true && state_nodes[i].total_income !== null) {
-                        // console.log("xcvxcvxvc");
-                        console.log("asdasd " + state_nodes[i].total_income);
-                        sumOfYourChildsTotals += state_nodes[i].total_income;
-                    }
-                }
-            }
-            youSummedThemAll = true;
-            console.log(self_income + "   and " + sumOfYourChildsTotals);
-            if (youSummedThemAll) {
-                dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, self_income, sumOfYourChildsTotals));
-            }
-        } catch (error) {
-            // alert(error.message);
-        }
-    }
+    // useEffect(() => {
+    //     for (let n = 0; n < state_nodes.length; n++) {
+    //         if (state_nodes[n].tree_id === props.tree_id && state_nodes[n].parent_id === props.node_id && state_nodes[n].node_id !== props.node_id && state_nodes.length > 1) {
+    //             areAllChildsRegistered = areAllChildsRegistered && state_nodes[n].registered;
+    //             console.log("areAllChildsRegistered is: " + areAllChildsRegistered + " and type of it is: " + typeof (areAllChildsRegistered));
+    //             // dispatch(unRegNode(props.tree_id, props.node_id));
+    //             // youSummedThemAll = false;
+    //             if (areAllChildsRegistered === false) {
+    //                 console.log("it works so far");
+    //                 sumOfYourChildsTotals += state_nodes[n].total_income;
+    //                 dispatch(regNode(state_nodes[n].tree_id, state_nodes[n].node_id));
+    //                 youSummedThemAll = false;
+    //             } else if (areAllChildsRegistered === true) {
+    //                 console.log("It didn't come this far yet");
+    //                 if (youSummedThemAll === false) {
+    //                     if (props.tree_id === 1) {
+    //                         dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, true, self_income, sumOfYourChildsTotals));
+    //                     } else {
+    //                         dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, false, self_income, sumOfYourChildsTotals));
+    //                     }
+    //                     dispatch(regNode(state_nodes[n].tree_id, state_nodes[n].node_id));
+    //                 } else {
+    //                     youSummedThemAll = true;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }, [state_nodes])
+
+    // console.log("prevselfinc " + prev_self_income);
+    // useEffect(() => {
+    //     prev_username.current = username
+    // }, [username])
+
+    // if (youSummedThemAll === false) {
+    //     try {
+    //         for (let i = 0; i < state_nodes.length; i++) {
+    //             // console.log(state_nodes[i].total_income);
+    //             if (state_nodes.length >= 2 && areAllChildsRegistered) {
+    //                 if (state_nodes[i].tree_id === props.tree_id && state_nodes[i].parent_id === props.node_id && state_nodes[i].node_id !== props.node_id && state_nodes[i].registered === true && state_nodes[i].total_income !== null) {
+    //                     // console.log("xcvxcvxvc");
+    //                     console.log("asdasd " + state_nodes[i].total_income);
+    //                     sumOfYourChildsTotals += state_nodes[i].total_income;
+    //                 }
+    //             }
+    //         }
+    //         youSummedThemAll = true;
+    //         console.log(self_income + "   and " + sumOfYourChildsTotals);
+    //         if (youSummedThemAll) {
+    //             dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, self_income, sumOfYourChildsTotals));
+    //         }
+    //     } catch (error) {
+    //         // alert(error.message);
+    //     }
+    // }
 
 
     const detectNameChange = (e) => {
-        dispatch(changeRegInfo(props.tree_id, props.node_id));
+        // dispatch(unRegNode(props.tree_id, props.node_id));
         setUsername(e.target.value);
         // console.log(event.target.value);
         for (let i = 0; i < state_nodes.length; i++) {
             // console.log(state_nodes[i].total_income);
             if (state_nodes.length >= 2) {
-                if (state_nodes[i].tree_id === props.tree_id && state_nodes[i].parent_id === props.node_id && state_nodes[i].node_id !== props.node_id && state_nodes[i].registered === true && state_nodes[i].total_income !== null) {
+                if (state_nodes[i].tree_id === props.tree_id && state_nodes[i].parent_id === props.node_id && state_nodes[i].node_id !== props.node_id && state_nodes[i].total_income !== null) {
                     // console.log("xcvxcvxvc");
                     console.log("asdasd " + state_nodes[i].total_income);
                     sumOfYourChildsTotals += state_nodes[i].total_income;
@@ -130,16 +153,20 @@ const StyledNode = (props) => {
         }
         youSummedThemAll = true;
         console.log(self_income + "   and " + sumOfYourChildsTotals);
-        dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, self_income, sumOfYourChildsTotals));
+        if (props.node_id === 1) {
+            dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, true, self_income, sumOfYourChildsTotals));
+        } else {
+            dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, false, self_income, sumOfYourChildsTotals));
+        }
     }
 
     const detectIncomeChange = (e) => {
-        dispatch(changeRegInfo(props.tree_id, props.node_id));
+        // dispatch(unRegNode(props.tree_id, props.node_id));
         setSelf_Income(e.target.value);
         for (let i = 0; i < state_nodes.length; i++) {
             // console.log(state_nodes[i].total_income);
             if (state_nodes.length >= 2) {
-                if (state_nodes[i].tree_id === props.tree_id && state_nodes[i].parent_id === props.node_id && state_nodes[i].node_id !== props.node_id && state_nodes[i].registered === true && state_nodes[i].total_income !== null) {
+                if (state_nodes[i].tree_id === props.tree_id && state_nodes[i].parent_id === props.node_id && state_nodes[i].node_id !== props.node_id && state_nodes[i].total_income !== null) {
                     // console.log("xcvxcvxvc");
                     console.log("asdasd " + state_nodes[i].total_income);
                     sumOfYourChildsTotals += state_nodes[i].total_income;
@@ -148,15 +175,16 @@ const StyledNode = (props) => {
         }
         youSummedThemAll = true;
         console.log(self_income + "   and " + sumOfYourChildsTotals);
-        dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, self_income, sumOfYourChildsTotals));
+        if (props.node_id === 1) {
+            dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, true, self_income, sumOfYourChildsTotals));
+        } else {
+            dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, false, self_income, sumOfYourChildsTotals));
+        }
     }
-
 
     function handleMenuClick(e) {
         switch (e.key) {
             case '1':
-                console.log("this node's id: " + props.node_id + "and tree id is: " + props.tree_id);
-
                 dispatch(addNode(props.tree_id, props.node_id, child_node));
                 break;
             case '2':
@@ -189,6 +217,79 @@ const StyledNode = (props) => {
             ]}
         />
     );
+
+
+    // for (let n = 0; n < state_nodes.length; n++) {
+    //     if (state_nodes[n].tree_id === props.tree_id && state_nodes[n].parent_id === props.node_id && state_nodes[n].node_id !== props.node_id && state_nodes.length > 1) {
+    //         areAllChildsRegistered = areAllChildsRegistered && state_nodes[n].registered;
+    //         console.log("areAllChildsRegistered is: " + areAllChildsRegistered + " and type of it is: " + typeof (areAllChildsRegistered));
+    //         youSummedThemAll = false;
+    //         if (areAllChildsRegistered === false) {
+    //             alreadyReggedChild = false;
+    //             console.log("it works so far");
+    //             sumOfYourChildsTotals += state_nodes[n].total_income;
+    //             if (alreadyReggedChild === false) {
+    //                 dispatch(regNode(state_nodes[n].tree_id, state_nodes[n].node_id));
+    //                 alreadyReggedChild = true;
+    //             }
+    //             youSummedThemAll = false;
+    //             if (unReggedItAlready === false) {
+    //                 dispatch(unRegNode(props.tree_id, props.node_id));
+    //                 unReggedItAlready = true;
+    //             }
+    //         } else if (areAllChildsRegistered === true) {
+    //             console.log("It didn't come this far yet");
+    //             if (youSummedThemAll === false) {
+    //                 if (props.tree_id === 1) {
+    //                     dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, true, self_income, sumOfYourChildsTotals));
+    //                     unReggedItAlready = false;
+    //                 } else {
+    //                     dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, false, self_income, sumOfYourChildsTotals));
+    //                 }
+    //                 if (alreadyReggedChild === false) {
+    //                     dispatch(regNode(state_nodes[n].tree_id, state_nodes[n].node_id));
+    //                     alreadyReggedChild = true;
+    //                 }
+    //             } else {
+    //                 youSummedThemAll = true;
+    //             }
+    //         }
+    //     }
+    // }
+
+    let yagood = true;
+    let youAlreadyDispatchedYourselfWithChildrenUpdates = true;
+
+    for (let n = 0; n < state_nodes.length; n++) {
+        if (state_nodes[n].tree_id === props.tree_id && state_nodes[n].parent_id === props.node_id && state_nodes[n].node_id !== props.node_id && state_nodes.length > 1) {
+            areAllChildsRegistered = areAllChildsRegistered && state_nodes[n].registered;
+        }
+    }
+
+    if (!areAllChildsRegistered) {
+        for (let a = 0; a < state_nodes.length; a++) {
+            if (state_nodes[a].tree_id === props.tree_id && state_nodes[a].parent_id === props.node_id && state_nodes[a].node_id !== props.node_id && state_nodes.length > 1) {
+                sumOfYourChildsTotals += state_nodes[a].total_income;
+                dispatch(unRegNode(props.tree_id, props.node_id));
+                dispatch(regNode(state_nodes[a].tree_id, state_nodes[a].node_id));
+                youAlreadyDispatchedYourselfWithChildrenUpdates = false;
+            }
+        }
+    }
+
+    if (!youAlreadyDispatchedYourselfWithChildrenUpdates) {
+        dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, true, self_income, sumOfYourChildsTotals))
+        youAlreadyDispatchedYourselfWithChildrenUpdates = true;
+    }
+
+
+
+
+
+
+
+
+
 
     return (
         <StyledNodeDiv>

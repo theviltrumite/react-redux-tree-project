@@ -1,4 +1,4 @@
-import { ADD_NODE, CHANGE_INCOME_INFO, CHANGE_REG_INFO, DELETE_NODE } from './actionTypes'
+import { ADD_NODE, CHANGE_INCOME_INFO, UNREG_NODE, DELETE_NODE, REG_NODE } from './actionTypes'
 
 let lastId = 1;
 
@@ -40,9 +40,11 @@ const nodeReducer = (state = initialState, action) => {
             }
         case CHANGE_INCOME_INFO:
             return state.map(node => (node.tree_id === action.payload.tree_id && node.node_id === action.payload.node_id) ?
-                { ...node, username: action.payload.username, self_income: action.payload.self_income, total_income: action.payload.self_income + action.payload.sumOfYourChildsTotals, registered: true } : node);
-        case CHANGE_REG_INFO:
+                { ...node, username: action.payload.username, self_income: action.payload.self_income, total_income: action.payload.self_income + action.payload.sumOfYourChildsTotals, registered: action.payload.registration } : node);
+        case UNREG_NODE:
             return state.map(node => (node.tree_id === action.payload.tree_id && node.node_id === action.payload.node_id) ? { ...node, registered: false } : node);
+        case REG_NODE:
+            return state.map(node => (node.tree_id === action.payload.tree_id && node.node_id === action.payload.node_id) ? { ...node, registered: true } : node);
         default: return state
     }
 }
