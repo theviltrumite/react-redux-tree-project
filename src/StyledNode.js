@@ -278,7 +278,11 @@ const StyledNode = (props) => {
     }
 
     if (!youAlreadyDispatchedYourselfWithChildrenUpdates) {
-        dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, true, self_income, sumOfYourChildsTotals))
+        if (props.node_id === 1) {
+            dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, true, self_income, sumOfYourChildsTotals));
+        } else {
+            dispatch(changeIncomeInfo(props.tree_id, props.node_id, username, false, self_income, sumOfYourChildsTotals));
+        }
         youAlreadyDispatchedYourselfWithChildrenUpdates = true;
     }
 
